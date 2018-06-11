@@ -131,7 +131,60 @@ In each output space (e.g., T1w, MNI, surface\*):
 .footnote[\*\* Requires ICA-AROMA]
 
 ]
+
 ---
+
+layout: true
+
+## fMRIPrep walkthrough
+### Reports
+
+---
+
+![Skull-stripping and tissue segmentation report](assets/sub-001_T1w_seg_brainmask.svg)
+
+The brain mask report shows the quality of intensity non-uniformity (INU) correction,
+skull stripping, and tissue segmentation.
+
+---
+
+![MNI normalization report](assets/sub-001_T1w_t1_2_mni.svg)
+
+The MNI normalization report shows the quality of the non-linear normalization step.
+
+Skull stripping defects may be more obvious here.
+
+---
+
+![FreeSurfer reconstruction report](assets/sub-001_T1w_reconall.svg)
+
+The FreeSurfer subject reconstruction report shows the white-gray boundary
+and pial surface overlaid on the T1w image.
+
+---
+
+![Fieldmap-less susceptibility distortion correction report](assets/sub-001_task-stroop_bold_sdc_syn.svg)
+
+The fieldmap-less susceptibility distortion correction (SDC) report shows
+a before and after view, with the white matter segmentation overlaid as
+reference.
+
+---
+
+![BOLD ROI report](assets/sub-001_task-stroop_bold_rois.svg)
+
+---
+
+![Boundary-based registration report](assets/sub-001_task-stroop_bold_bbr.svg)
+
+---
+
+![Confound and carpet plot report](assets/sub-001_task-stroop_bold_carpetplot.svg)
+
+---
+
+layout: true
+
 .left-column[
 
 # fMRIPrep
