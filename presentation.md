@@ -276,7 +276,50 @@ layout: true
 ]
 
 ---
+.right-column[## fMRIPrep is stable, not finished!]
+--
 .right-column[
+* fMRI preprocessing is a moving target, and best practices are going to change.
+]
+--
+.right-column[
+* You may already have improvements you want to make.
+]
+--
+.right-column[
+* fMRIPrep is a community-supported effort, and your contributions are encouraged!
+]
+
+---
+
+.right-column[
+
+## Outside contributions
+
+Significant components of current fMRIPrep functionality were contributed by
+interested users who had needs we didn't yet support.
+
+Large additions include:
+
+* ICA-AROMA support
+* Multi-echo BOLD
+* CIFTI2 outputs
+* Lesion masking
+
+In addition, we've had numerous bug fixes and documentation updates from users.
+]
+---
+.right-column[
+## Citation Needed
+
+We believe that code and documentation are academic and scientific
+contributions that deserve citation.
+
+![Zenodo](assets/zenodo.png)
+
+Zenodo is an online repository that archives and assigns DOIs to software.
+We encourage all contributors to add themselves to our author list.
+
 ]
 
 ---
