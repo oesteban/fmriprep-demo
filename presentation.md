@@ -6,15 +6,19 @@ class: center middle
 #### Stanford University
 
 ---
+name: footer
+layout: true
 
-layout: false
+<div class="slide-slug">OHBM 2018</div>
+---
+
 .left-column[
 # fMRIPrep
 ### What is it?
 ]
 .right-column[
-## Robust, generic fMRI preprocessing
 
+## Robust, generic fMRI preprocessing
 * Works with the data you give it, imposing minimal requirements
   * You can run it on a T1w scan and a BOLD series
 
@@ -63,6 +67,7 @@ $ singularity exec docker://poldracklab/fmriprep:latest \
 ---
 
 layout: true
+template: footer
 
 ## fMRIPrep walkthrough
 
@@ -135,6 +140,7 @@ In each output space (e.g., T1w, MNI, surface\*):
 ---
 
 layout: true
+template: footer
 
 ## fMRIPrep walkthrough
 ### Reports
@@ -264,6 +270,7 @@ preprocessed BOLD series.
 ---
 
 layout: true
+template: footer
 
 .left-column[
 
@@ -307,10 +314,11 @@ Large additions include:
 * Lesion masking
 
 In addition, we've had numerous bug fixes and documentation updates from users.
+
 ]
 ---
 .right-column[
-## Citation Needed
+## Citations Needed
 
 We believe that code and documentation are academic and scientific
 contributions that deserve citation.
@@ -324,7 +332,11 @@ We encourage all contributors to add themselves to our author list.
 
 ---
 
-layout: false
+layout: true
+template: footer
+
+---
+
 ## Summary
 
 ---
