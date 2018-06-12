@@ -141,14 +141,31 @@ layout: true
 
 ---
 
-![Skull-stripping and tissue segmentation report](assets/sub-001_T1w_seg_brainmask.svg)
+Reports describe the data as found, and the steps applied.
+
+<p align="center">
+<img alt="Execution and anatomical summary" src="assets/anat_summary.png">
+</p>
+
+Textual summaries are good to check for obvious failures, such as missing images or implausible
+values.
+
+---
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_T1w_seg_brainmask.svg">filename:assets/sub-001_T1w_seg_brainmask.svg</object>
+</p>
 
 The brain mask report shows the quality of intensity non-uniformity (INU) correction,
 skull stripping, and tissue segmentation.
 
 ---
 
-![MNI normalization report](assets/sub-001_T1w_t1_2_mni.svg)
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_T1w_t1_2_mni.svg">filename:assets/sub-001_T1w_t1_2_mni.svg</object>
+</p>
 
 The MNI normalization report shows the quality of the non-linear normalization step.
 
@@ -156,14 +173,49 @@ Skull stripping defects may be more obvious here.
 
 ---
 
-![FreeSurfer reconstruction report](assets/sub-001_T1w_reconall.svg)
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_T1w_reconall.svg">filename:assets/sub-001_T1w_reconall.svg</object>
+</p>
 
 The FreeSurfer subject reconstruction report shows the white-gray boundary
 and pial surface overlaid on the T1w image.
 
 ---
+name: funcsum
 
-![Fieldmap-less susceptibility distortion correction report](assets/sub-001_task-stroop_bold_sdc_syn.svg)
+<p align="center">
+<img alt="Functional summary" src="assets/func_summary.png">
+</p>
+
+The functional summary can vary based on:
+
+1. Available data
+---
+template: funcsum
+ \- SDC technique depends on the available field maps
+
+---
+template: funcsum
+2. Metadata - slice-timing correction requires `SliceTiming` metadata entry
+
+---
+template: funcsum
+2. Metadata
+3. User selections - `bbregister` requires FreeSurfer, `FLIRT` used otherwise
+
+---
+template: funcsum
+2. Metadata
+3. User selections
+4. Heuristics - BBR may fall back to volume-based coregistration
+
+---
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_task-stroop_bold_sdc_syn.svg">filename:assets/sub-001_task-stroop_bold_sdc_syn.svg</object>
+</p>
 
 The fieldmap-less susceptibility distortion correction (SDC) report shows
 a before and after view, with the white matter segmentation overlaid as
@@ -171,15 +223,43 @@ reference.
 
 ---
 
-![BOLD ROI report](assets/sub-001_task-stroop_bold_rois.svg)
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_task-stroop_bold_rois.svg">filename:assets/sub-001_task-stroop_bold_rois.svg</object>
+</p>
+
+BOLD ROI reports show the BOLD brainmask along with the aCompCor and
+tCompCor masks.
 
 ---
 
-![Boundary-based registration report](assets/sub-001_task-stroop_bold_bbr.svg)
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_task-stroop_bold_bbr.svg">filename:assets/sub-001_task-stroop_bold_bbr.svg</object>
+</p>
+
+The boundary-based registration report shows the registered BOLD reference
+with the white and pial surfaces overlaid.
 
 ---
 
-![Confound and carpet plot report](assets/sub-001_task-stroop_bold_carpetplot.svg)
+<p align="center">
+<img src="assets/sub-001_task-stroop_bold_carpetplot.svg" width="60%" />
+</p>
+
+The BOLD summary report shows several characteristic statistics along
+with a carpetplot, giving a view of the temporal characteristics of the
+preprocessed BOLD series.
+
+---
+
+<div style="height: 3em"></div>
+
+#### Summary
+
+1. Show researchers their data
+2. Describe the preprocessing performed
+3. Show the results of preprocessing, facilitating early error detection
 
 ---
 
