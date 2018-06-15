@@ -1,6 +1,6 @@
 class: center middle
 
-# fMRIPrep - A Robust Preprocessing Pipeline for functional MRI
+# fMRIPrep - A Robust Preprocessing Pipeline for Functional MRI
 ### Christopher J. Markiewicz
 #### Center for Reproducible Neuroscience
 #### Stanford University
