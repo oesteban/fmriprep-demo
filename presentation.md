@@ -409,5 +409,16 @@ class: middle center
 ### Please visit [Poster #2035](https://files.aievolution.com/hbm1801/abstracts/31779/2035_Markiewicz.pdf)
 
 ---
-## References
 
+## Live links
+
+* [OpenNeuro.org](https://openneuro.org)
+  * [DS000001](https://openneuro.org/datasets/ds000001/versions/00006?app=FMRIPREP&version=58&job=5af461051841f62a9a80d70d)
+  * [DS000233](https://openneuro.org/datasets/ds000233/versions/00004?app=FMRIPREP&version=57&job=5aea16e089704e1298dbd618)
+
+---
+
+## "Live" links
+
+* [sub-01](assets/sub-01.html)
+* [sub-rid000001](assets/sub-rid000001.html)
