@@ -388,6 +388,19 @@ template: footer
 
 ## Summary
 
+fMRIPrep is a **robust**, **generic** fMRI preprocessing pipeline that produces
+outputs that are ready to be used in various analysis pipelines\*.
+
+--
+
+Generated reports enable researchers to quickly identify issues in their data
+as well as any errors in preprocessing.
+
+--
+
+fMRIPrep is a **community effort**. We welcome *any* level of engagement, from
+reporting bugs to contributing code.
+
 ---
 
 class: middle center
