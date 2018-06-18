@@ -5,6 +5,8 @@ class: center middle
 #### Center for Reproducible Neuroscience
 #### Stanford University
 
+###### [effigies.github.io/fmriprep-demo](https://effigies.github.io/fmriprep-demo)
+
 ---
 name: footer
 layout: true
