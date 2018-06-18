@@ -301,6 +301,37 @@ template: footer
 
 .right-column[
 
+## Collaborative infrastructure
+
+fMRIPrep is hosted on [GitHub](https://github.com/poldracklab/fmriprep), a version
+control platform with built-in support for discussions and code reviews.
+
+#### Issues
+
+Users can contribute issues to flag bugs, request features, or note gaps in our
+documentation.
+
+![Fading screenshot of issues](assets/issues.png)
+
+]
+
+---
+
+.right-column[
+
+## Collaborative infrastructure
+#### Pull requests
+
+Users can directly contribute bug fixes, new features, and documentation updates.
+
+![Fading screenshot of issues](assets/example_pr.png)
+
+]
+
+---
+
+.right-column[
+
 ## Outside contributions
 
 Significant components of current fMRIPrep functionality were contributed by
@@ -308,12 +339,14 @@ interested users who had needs we didn't yet support.
 
 Large additions include:
 
-* ICA-AROMA support
-* Multi-echo BOLD
-* CIFTI2 outputs
-* Lesion masking
+* ICA-AROMA support ([@jdkent](https://github.com/jdkent))
+* Multi-echo BOLD ([@emdupre](https://github.com/emdupre))
+* CIFTI2 outputs ([@mgxd](https://github.com/mgxd))
+* Lesion masking ([@danlurie](https://github.com/danlurie))
 
 In addition, we've had numerous bug fixes and documentation updates from users.
+
+![GitHub avatar cloud](assets/avatar_cloud.png)
 
 ]
 ---
@@ -327,6 +360,20 @@ contributions that deserve citation.
 
 Zenodo is an online repository that archives and assigns DOIs to software.
 We encourage all contributors to add themselves to our author list.
+
+]
+
+---
+
+.right-column[
+
+## Collaborative infrastructure (reprise)
+#### Neurostars
+
+We also participate in the Neurostars community, to make user support more
+accessible and searchable.
+
+![Fading screenshot of issues](assets/neurostars_fmriprep.png)
 
 ]
 
