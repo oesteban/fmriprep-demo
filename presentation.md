@@ -132,7 +132,7 @@ In each output space (e.g., T1w, MNI, surface\*):
 * BOLD mask
 * Confounds (tabular file)
 * Non-aggressively denoised BOLD series\*\*
-* MELOIC mix (tabular file)\*\*
+* MELODIC mix (tabular file)\*\*
 * ICA-AROMA noise components (tabular file)\*\*
 
 .footnote[\*\* Requires ICA-AROMA]
