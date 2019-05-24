@@ -11,7 +11,7 @@ class: center middle
 name: footer
 layout: true
 
-<div class="slide-slug">fMRIPrep</div>
+<div class="slide-slug">Memory Lab - 05/24/2019</div>
 ---
 
 .left-column[
@@ -42,9 +42,9 @@ layout: true
 ## Index
 
 * General structure of the workflow
-* Volumetric vs. surface analysis  
+* Volumetric vs. surface analysis
 * Why MRIQC and how they play along together?
-* Tips and tricks for screening the visual reports  
+* Tips and tricks for screening the visual reports
 * Running fMRIPrep on Sherlock and other computing clusters and troubleshooting during installation
 
 ---
@@ -292,6 +292,96 @@ $ singularity exec docker://poldracklab/fmriprep:latest \
 
 ---
 
+.small[
+```Bash
+#!/bin/bash
+#
+#SBATCH -J fmriprep
+#SBATCH --array=1-13
+#SBATCH --time=48:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem-per-cpu=4G
+#SBATCH -p russpold,owners,normal
+
+# Outputs ----------------------------------
+#SBATCH -o log/%x-%A-%a.out
+#SBATCH -e log/%x-%A-%a.err
+#SBATCH --mail-user=%u@stanford.edu
+#SBATCH --mail-type=ALL
+# ------------------------------------------
+
+BIDS_DIR="$OAK/data/openfmri/ds000003"
+
+export TEMPLATEFLOW_HOME="/oak/stanford/groups/russpold/data/templateflow"
+SINGULARITY_CMD="singularity run -B $OAK:$OAK -B $L_SCRATCH:/work $GROUP_HOME/singularity_images/
+poldracklab_fmriprep_1.4.0-2019-05-15-2870a0e4efbf.simg"
+OUTPUT_DIR="${OAK}/data/openfmri/derivatives/ds000003/fmriprep-1.4.0"
+
+unset PYTHONPATH
+export FS_LICENSE=$HOME/.freesurfer.txt
+
+subject=$( tail -n +2 $BIDS_DIR/participants.tsv | cut -f 1  | sed "${SLURM_ARRAY_TASK_ID}q;d" | sed "s/sub-//g" | \
+           sed 's!.*/!!' )
+cmd="${SINGULARITY_CMD} ${BIDS_DIR} ${OUTPUT_DIR} participant --participant-label $subject -w /work/ --use-aroma -vv \
+    --skip_bids_validation --omp-nthreads 8 --nthreads 12 --mem_mb 30000 --use-syn-sdc --cifti-output --notrack \
+    --output-spaces MNI152NLin2009cAsym:res-2 anat fsnative fsaverage5"
+echo Running task ${SLURM_ARRAY_TASK_ID}
+echo Commandline: $cmd
+eval $cmd
+exitcode=$?
+
+if [ "$exitcode" -ne "0" ]; then
+    echo "$subject" >> ${SLURM_JOB_NAME}_failed_subjects.${SLURM_ARRAY_JOB_ID}
+    echo "${SLURM_ARRAY_TASK_ID}" >> ${SLURM_JOB_NAME}_failed_taskids.${SLURM_ARRAY_JOB_ID}
+else
+    echo "$subject" >> ${SLURM_JOB_NAME}_success_subjects.${SLURM_ARRAY_JOB_ID}
+fi
+
+echo Finished tasks ${SLURM_ARRAY_TASK_ID} with exit code $exitcode
+exit $exitcode
+```
+]
+
+
+---
+
+
+### Requesting resources
+
+```Bash
+#!/bin/bash
+#
+#SBATCH -J fmriprep
+#SBATCH --array=1-13%4
+#SBATCH --time=48:00:00
+#SBATCH -n 1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem-per-cpu=4G
+#SBATCH -p russpold,owners,normal
+
+# Outputs ----------------------------------
+#SBATCH -o log/%x-%A-%a.out
+#SBATCH -e log/%x-%A-%a.err
+#SBATCH --mail-user=%u@stanford.edu
+#SBATCH --mail-type=ALL
+# ------------------------------------------
+```
+
+Key line:
+
+```Bash
+#SBATCH --array=1-13%4
+```
+
+This will generate 13 parallel jobs, running maximum 4 simultaneously at any given time.
+SLURM will generate variables ``${SLURM_ARRAY_TASK_ID}`` with integer values from 1 to 13
+available in the scope of the sbatch script.
+
+
+
+---
+
 ### Your data
 
 .pull-left[![Example BIDS Dataset](assets/bids.png)]
@@ -309,7 +399,7 @@ functional preprocessing.
 ### Derivatives
 
 fMRIPrep outputs adhere to the
-[BIDS Derivatives draft 
+[BIDS Derivatives draft
 specification](https://bids-specification.readthedocs.io/en/derivatives/05-derivatives/01-introduction.html).
 
 .pull-left[
