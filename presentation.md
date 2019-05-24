@@ -954,10 +954,7 @@ In addition, we've had numerous bug fixes and documentation updates from users.
 We believe that code and documentation are academic and scientific
 contributions that deserve citation.
 
-![Zenodo](assets/zenodo.png)
-
-Zenodo is an online repository that archives and assigns DOIs to software.
-We encourage all contributors to add themselves to our author list.
+<img src="assets/nmeth.png" style="width: 100%" />
 
 ]
 
@@ -1011,3 +1008,4 @@ reporting bugs to contributing code.
 
 * [sub-01](assets/sub-01.html)
 * [sub-rid000001](assets/sub-rid000001.html)
+ci
