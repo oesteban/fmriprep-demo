@@ -1,22 +1,22 @@
 class: center middle
 
 # fMRIPrep - A Robust Preprocessing Pipeline for Functional MRI
-### Christopher J. Markiewicz
+### CJ. Markiewicz, R. Ciric, O. Esteban
 #### Center for Reproducible Neuroscience
 #### Stanford University
 
-###### [effigies.github.io/fmriprep-demo](https://effigies.github.io/fmriprep-demo)
+###### [oesteban.github.io/fmriprep-demo](https://oesteban.github.io/fmriprep-demo)
 
 ---
 name: footer
 layout: true
 
-<div class="slide-slug">OHBM 2018</div>
+<div class="slide-slug">fMRIPrep</div>
 ---
 
 .left-column[
-# fMRIPrep
-### What is it?
+
+# What is fMRIPrep?
 ]
 .right-column[
 
@@ -35,6 +35,229 @@ layout: true
 * fMRIPrep generates reports that allow you to detect issues in
   preprocessing
 
+]
+
+---
+
+## Index
+
+* General structure of the workflow
+* Volumetric vs. surface analysis  
+* Why MRIQC and how they play along together?
+* Tips and tricks for screening the visual reports  
+* Running fMRIPrep on Sherlock and other computing clusters and troubleshooting during installation
+
+---
+
+layout: true
+template: footer
+
+---
+
+## General structure of the workflow
+
+<div align="center" style='margin-top: 1em'>
+<img alt="The fMRIPrep workflow" src="assets/fmriprep-workflow-final.svg" width="100%">
+</div>
+
+---
+
+## Anatomical processing: brain extraction, INU correction, brain tissue segmentation
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_T1w_seg_brainmask.svg">filename:assets/sub-001_T1w_seg_brainmask.svg</object>
+</p>
+
+The brain mask report shows the quality of intensity non-uniformity (INU) correction,
+skull stripping, and tissue segmentation.
+
+---
+
+## Anatomical processing: spatial normalization
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_T1w_t1_2_mni.svg">filename:assets/sub-001_T1w_t1_2_mni.svg</object>
+</p>
+
+The MNI normalization report shows the quality of the non-linear normalization step.
+
+Skull stripping defects may be more obvious here.
+
+---
+
+## Anatomical processing: surface reconstruction
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_T1w_reconall.svg">filename:assets/sub-001_T1w_reconall.svg</object>
+</p>
+
+The FreeSurfer subject reconstruction report shows the white-gray boundary
+and pial surface overlaid on the T1w image.
+
+---
+
+## General structure of the workflow (recap)
+
+<div align="center" style='margin-top: 1em'>
+<img alt="The fMRIPrep workflow" src="assets/fmriprep-workflow-final.svg" width="100%">
+</div>
+
+---
+
+## Functional processing: susceptibility distortion correction
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-100185_task-machinegame_run-1_desc-sdc_bold.svg">filename:assets/sub-100185_task-machinegame_run-1_desc-sdc_bold.svg</object>
+</p>
+
+The fieldmap-less susceptibility distortion correction (SDC) report shows
+a before and after view, with the white matter segmentation overlaid as
+reference.
+
+---
+
+## Functional processing: SDC in detail
+
+.left-column2[
+* Hierarchy of SDC methods:
+  1. PE-Polar
+  2. Fieldmap
+  3. Fieldmap-less
+
+
+* Arguments:
+  * ``--use-syn-sdc``
+  * ``--force-syn``
+  * ``--ignore fieldmaps``
+
+
+* REQUIRES (opts. 1 or 2): setting the [``IntendedFor``](https://bids-specification.readthedocs.io/en/latest/04-modality-specific-files/01-magnetic-resonance-imaging-data.html#fieldmap-data) metadata field of fieldmaps.
+]
+
+.right-column2[
+<p align="center">
+<img src="assets/fmriprep-workflow-sdc.svg" width="100%">
+</p>
+]
+
+---
+## Functional processing: anatomical alignment
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-001_task-stroop_bold_bbr.svg">filename:assets/sub-001_task-stroop_bold_bbr.svg</object>
+</p>
+
+The boundary-based registration report shows the registered BOLD reference
+with the white and pial surfaces overlaid.
+
+---
+
+## Functional processing: BOLD ROIs
+
+<p>
+<object class="svg-reportlet" type="image/svg+xml"
+ data="assets/sub-100185_task-machinegame_run-1_desc-rois_bold.svg">filename:assets/sub-100185_task-machinegame_run-1_desc-rois_bold.svg</object>
+</p>
+
+BOLD ROI reports show the BOLD brainmask along with the aCompCor and
+tCompCor masks.
+
+---
+
+## Functional processing: confounding signals (1)
+
+<p align="center" style="padding-top: 120px;">
+<img src="assets/sub-10_task-rhymejudgment_desc-compcorvar_bold.svg" width="100%" />
+</p>
+
+Variance explained w.r.t. number of components, with (a/t)CompCor denoising.
+
+---
+
+## Functional processing: confounding signals (2)
+
+<p align="center">
+<img src="assets/sub-100185_task-machinegame_run-1_desc-carpetplot_bold.svg" width="70%" />
+</p>
+
+The BOLD summary report shows several characteristic statistics along
+with a carpetplot, giving a view of the temporal characteristics of the
+preprocessed BOLD series.
+
+---
+
+## Functional processing: confounding signals (3)
+
+<p align="center">
+<img src="assets/sub-10_task-rhymejudgment_desc-confoundcorr_bold.svg" width="100%" />
+</p>
+
+Correlations across regressors and their correlation to the global signal are also
+presented since fMRIPrep 1.4.0.
+
+---
+
+## Surface outputs: "Grayordinates"
+
+.left-column2[
+<p align="center">
+<img src="assets/nihms479144f1.png" width="80%" />
+</p>
+]
+
+.right-column2[
+* CIFTI2 files (``*_bold.dtseries.nii``) are built by sampling BOLD
+  signal at ~92k locations across the gray matter.
+
+
+* Combine surface and volumetric information.
+
+
+* Enabled with the ``--cifti-outputs`` option
+
+
+* However, fMRIPrep **only partially** supports the original grayordinates
+  from the HCP project.
+
+
+
+* Figure from ([Glasser et al., 2013](https://doi.org/10.1016/j.neuroimage.2013.04.127))
+]
+
+---
+
+# MRIQC vs. fMRIPrep
+
+.pull-left[
+
+### MRIQC
+
+* Purpose: assessment of *raw* MRI data
+* Processing: quick & dirty
+* Derivatives: image quality metrics only
+* Reports: to assess the data
+* Other outcomes: data exclusion list
+
+#### Use first with pre-specified exclusion criteria
+]
+
+--
+
+.pull-right[
+### fMRIPrep
+
+* Purpose: ready data for analysis
+* Processing: careful & sophisticated
+* Derivatives: BOLD data to feed models and contound regressors
+* Reports: to assess the processing
+* Other outcomes: boilerplate, etc.
+
+#### Use after MRIQC, only on those subjects who passed QC
 ]
 
 ---
@@ -66,12 +289,6 @@ $ singularity exec docker://poldracklab/fmriprep:latest \
 * OpenNeuro is a free, online platform for sharing and analyzing neuroimaging data
 ]
 
----
-
-layout: true
-template: footer
-
-## fMRIPrep walkthrough
 
 ---
 
@@ -89,19 +306,11 @@ functional preprocessing.
 
 ---
 
-### The pipeline
-
-<div align="center" style='margin-top: 1em'>
-<img alt="Example BIDS Dataset" src="assets/fmriprep-workflow-lowtext.png" width="85%">
-</div>
-
----
-
 ### Derivatives
 
 fMRIPrep outputs adhere to the
-[BIDS Derivatives](https://docs.google.com/document/d/1Wwc4A6Mow4ZPPszDIWfCUCRNstn7d_zzaWPcfcHmgI4)
-draft specification.
+[BIDS Derivatives draft 
+specification](https://bids-specification.readthedocs.io/en/derivatives/05-derivatives/01-introduction.html).
 
 .pull-left[
 
@@ -159,37 +368,6 @@ Textual summaries are good to check for obvious failures, such as missing images
 values.
 
 ---
-
-<p>
-<object class="svg-reportlet" type="image/svg+xml"
- data="assets/sub-001_T1w_seg_brainmask.svg">filename:assets/sub-001_T1w_seg_brainmask.svg</object>
-</p>
-
-The brain mask report shows the quality of intensity non-uniformity (INU) correction,
-skull stripping, and tissue segmentation.
-
----
-
-<p>
-<object class="svg-reportlet" type="image/svg+xml"
- data="assets/sub-001_T1w_t1_2_mni.svg">filename:assets/sub-001_T1w_t1_2_mni.svg</object>
-</p>
-
-The MNI normalization report shows the quality of the non-linear normalization step.
-
-Skull stripping defects may be more obvious here.
-
----
-
-<p>
-<object class="svg-reportlet" type="image/svg+xml"
- data="assets/sub-001_T1w_reconall.svg">filename:assets/sub-001_T1w_reconall.svg</object>
-</p>
-
-The FreeSurfer subject reconstruction report shows the white-gray boundary
-and pial surface overlaid on the T1w image.
-
----
 name: funcsum
 
 <p align="center">
@@ -217,47 +395,6 @@ template: funcsum
 2. Metadata
 3. User selections
 4. Heuristics - BBR may fall back to volume-based coregistration
-
----
-
-<p>
-<object class="svg-reportlet" type="image/svg+xml"
- data="assets/sub-001_task-stroop_bold_sdc_syn.svg">filename:assets/sub-001_task-stroop_bold_sdc_syn.svg</object>
-</p>
-
-The fieldmap-less susceptibility distortion correction (SDC) report shows
-a before and after view, with the white matter segmentation overlaid as
-reference.
-
----
-
-<p>
-<object class="svg-reportlet" type="image/svg+xml"
- data="assets/sub-001_task-stroop_bold_rois.svg">filename:assets/sub-001_task-stroop_bold_rois.svg</object>
-</p>
-
-BOLD ROI reports show the BOLD brainmask along with the aCompCor and
-tCompCor masks.
-
----
-
-<p>
-<object class="svg-reportlet" type="image/svg+xml"
- data="assets/sub-001_task-stroop_bold_bbr.svg">filename:assets/sub-001_task-stroop_bold_bbr.svg</object>
-</p>
-
-The boundary-based registration report shows the registered BOLD reference
-with the white and pial surfaces overlaid.
-
----
-
-<p align="center">
-<img src="assets/sub-001_task-stroop_bold_carpetplot.svg" width="60%" />
-</p>
-
-The BOLD summary report shows several characteristic statistics along
-with a carpetplot, giving a view of the temporal characteristics of the
-preprocessed BOLD series.
 
 ---
 
@@ -400,13 +537,6 @@ as well as any errors in preprocessing.
 
 fMRIPrep is a **community effort**. We welcome *any* level of engagement, from
 reporting bugs to contributing code.
-
----
-
-class: middle center
-# Questions?
-
-### Please visit [Poster #2035](https://files.aievolution.com/hbm1801/abstracts/31779/2035_Markiewicz.pdf)
 
 ---
 
